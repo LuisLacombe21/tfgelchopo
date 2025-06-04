@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Nunito:wght@300;400;600&display=swap');
+
+/* Estilos Generales del Cuerpo */
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Evita barras de scroll si el canvas es pantalla completa */
+  background-color: #1a1816; /* Fondo muy oscuro, terroso, como tierra húmeda */
+  font-family: 'Nunito', sans-serif; /* Fuente base suave y orgánica */
+  color: #c9bba8; /* Color de texto base por defecto */
+}
+
+/* Estilos para el Canvas de p5.js (Fondo) */
+canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Detrás de otros elementos */
+}
+
+/* Contenedor Principal de Explicación */
+#explicacionContenedor {
+  display: none; /* Inicialmente oculto, p5.js lo mostrará */
+  position: absolute;
+  top: 5vh; /* Espacio desde arriba, relativo a la altura de la vista */
+  left: 50%;
+  transform: translateX(-50%); /* Centrado horizontalmente */
+  width: clamp(300px, 85vw, 750px); /* Ancho adaptable con mínimos y máximos */
+  max-height: 85vh; /* Altura máxima para dejar ver el fondo y evitar que ocupe todo */
+  
+  background-color: rgba(50, 45, 40, 0.88); /* Marrón oscuro semi-transparente, como una superficie orgánica */
+  backdrop-filter: blur(8px); /* Efecto "cristal esmerilado" sobre el canvas de fondo */
+  -webkit-backdrop-filter: blur(8px); /* Soporte para Safari */
+
+  padding: 30px 35px;
+  box-sizing: border-box;
+  border-radius: 25px; /* Bordes más redondeados, orgánicos */
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5), /* Sombra para profundidad */
+              inset 0 0 15px rgba(20, 15, 10, 0.4); /* Sombra interior sutil, como una membrana */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  /* justify-content: center; /* Comentado para que el contenido largo empiece desde arriba */
+  z-index: 10; /* Encima del canvas */
+  overflow-y: auto; /* Scroll vertical si el contenido es muy largo */
+  border: 1px solid rgba(180, 160, 140, 0.2); /* Borde sutil, como un contorno natural */
+}
+
+/* Estilización de la Barra de Scroll para #explicacionContenedor (Navegadores WebKit) */
+#explicacionContenedor::-webkit-scrollbar {
+  width: 8px;
+}
+#explicacionContenedor::-webkit-scrollbar-track {
+  background: rgba(30, 25, 20, 0.5); /* Fondo del track del scroll */
+  border-radius: 10px;
+}
+#explicacionContenedor::-webkit-scrollbar-thumb {
+  background-color: rgba(180, 160, 140, 0.5); /* Color del "agarre" del scroll, como una rama pulida */
+  border-radius: 10px;
+  border: 2px solid rgba(30, 25, 20, 0.5); /* Borde del agarre */
+}
+
+/* Título dentro del Panel de Explicación */
+#explicacionTitulo {
+  font-family: 'Merriweather', serif; /* Fuente con serifa para un toque más clásico/natural */
+  color: #e0d6c2; /* Un color hueso o beige claro, como un hongo iluminado */
+  font-size: clamp(22px, 4vw, 30px); /* Tamaño de fuente adaptable */
+  font-weight: 400;
+  margin-bottom: 20px;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.4); /* Sombra de texto sutil para relieve */
+}
+
+/* Párrafo dentro del Panel de Explicación */
+#explicacionParrafo {
+  color: #c9bba8; /* Un tono más claro que el fondo, pero no blanco puro */
+  font-size: clamp(15px, 2vw, 17px); /* Tamaño de fuente adaptable */
+  line-height: 1.7; /* Espaciado entre líneas para mejorar la legibilidad */
+  max-width: 650px; /* Ancho máximo para legibilidad */
+  text-align: left; /* Mejor para párrafos largos, o 'justify' */
+  margin-bottom: 25px;
+  font-weight: 300; /* Un peso más ligero para el texto del cuerpo */
+}
+
+/* Contenedor del Video y Video */
+#explicacionVideoContenedor {
+  width: 100%;
+  max-width: 600px; /* Ajusta según necesidad */
+  margin-bottom: 25px;
+}
+
+#explicacionVideoContenedor video {
+  display: block;
+  width: 100%; /* Hacerlo responsivo dentro de su contenedor */
+  height: auto; /* Mantener la proporción del video */
+  max-height: 350px; /* Altura máxima para el video */
+  border-radius: 15px; /* Bordes redondeados para el video */
+  border: 2px solid rgba(100, 90, 80, 0.5); /* Borde terroso sutil, como un marco de madera vieja */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Sombra para integrar el video */
+}
+
+/* Botón Principal "Siguiente" */
+#explicacionSiguienteBtn {
+  background-color: #695542; /* Un marrón medio, como madera o tierra seca */
+  color: #e0d6c2; /* Texto claro, consistente */
+  padding: 14px 30px;
+  border: none;
+  border-radius: 50px; /* Botón muy redondeado, como una piedra lisa o espora */
+  font-family: 'Nunito', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  margin-top: 15px; /* Espacio arriba del botón */
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3); /* Sombra sutil */
+  letter-spacing: 0.5px; /* Ligero espaciado entre letras */
+}
+
+#explicacionSiguienteBtn:hover {
+  background-color: #7f6a54; /* Un poco más claro al pasar el ratón */
+  transform: translateY(-2px); /* Pequeño levantamiento, efecto "vivo" */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4); /* Sombra más pronunciada */
+}
+
+#explicacionSiguienteBtn:active {
+  background-color: #594532; /* Más oscuro al presionar */
+  transform: translateY(0px); /* Vuelve a su posición original */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Sombra reducida al presionar */
+}
+
+/* Contenedor para los Botones de Época (Opcional) */
+.epoch-buttons-container {
+  display: flex;
+  flex-wrap: wrap; /* Para que se ajusten si no caben en una línea */
+  justify-content: center; /* Centrar los botones */
+  margin-top: 10px; /* Espacio encima del grupo de botones de época */
+  margin-bottom: 25px; /* Espacio debajo del grupo de botones */
+}
+
+/* Botones de Época (ej. 1980, 1990) */
+.epoch-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 8px; /* Espacio alrededor de cada botón */
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #c9bba8; /* Tono terroso claro */
+  background-color: #4a4035; /* Marrón más oscuro, como corteza */
+  border: 1px solid rgba(180, 160, 140, 0.25); /* Borde sutil */
+  border-radius: 15px; /* Redondeado, forma de guijarro o trozo de corteza */
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.3); /* Sutilmente hundido, como incrustado */
+}
+
+.epoch-button:hover {
+  background-color: #5e5042; /* Un poco más claro y cálido */
+  color: #e0d6c2; /* Texto más brillante */
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.2), 0 2px 5px rgba(0,0,0,0.2); /* Menos hundido, con sombra exterior */
+}
+
+.epoch-button.active, /* Clase para el botón de época activa (controlar con JS) */
+.epoch-button:focus {  /* Estilo para el foco, importante para accesibilidad */
+  background-color: #7a6856; /* Color distintivo para el activo, como musgo húmedo */
+  color: #f0e8dc; /* Texto más brillante y destacado */
+  font-weight: 600; /* Más peso para destacar */
+  box-shadow: 0 0 12px rgba(122, 104, 86, 0.5), /* Un resplandor suave, como bioluminiscencia */
+              0 3px 7px rgba(0,0,0,0.3); /* Sombra exterior más pronunciada para "elevarlo" */
+  transform: translateY(-1px) scale(1.02); /* Ligero levantamiento y escala */
+  outline: 2px solid rgba(180, 160, 140, 0.4); /* Outline sutil para el foco si se quita el predeterminado */
+  outline-offset: 2px;
+}
+
+/* Si decides quitar el outline predeterminado en :focus para .epoch-button.active,
+   asegúrate de que el estilo de :focus sea suficientemente distintivo por sí mismo.
+   La línea 'outline: 2px solid ...' de arriba es una forma de hacerlo personalizado.
+   Si la quitas, el navegador usará su outline por defecto en :focus (si no es .active).
+*/
